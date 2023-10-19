@@ -11,15 +11,30 @@ const Updatestudent = () => {
 
   const [id, setStudentId] = useState(location.state.studentId);
   const [studentname, setStudentName] = useState(location.state.studentName);
-  const [phoneNumber, setPhoneNumber] = useState(location.state.phoneNumber);
+  
   const [age, setAge] = useState(location.state.age);
   const [dateOfBirth, setDateOfBirth] = useState(location.state.dateOfBirth);
   const [address, setAddress] = useState(location.state.address);
   
-  
+  const [showErrNum,setShowErrNum] = useState(false)
+  const [phoneNumber, setPhoneNumber] = useState(location.state.phoneNumber);
 
 
   const navigate = useNavigate();
+  const handleNumChange = (e)=>{
+    const num = e.target.value
+    const numisValid = /^[1-9][0-9]{9}$/.test(num)
+    const onlyNumber = /^[0-9]*$/.test(num)
+    console.log(numisValid)
+    if (!numisValid && !onlyNumber){
+        setShowErrNum(true)
+    } else if(onlyNumber && num.length <=10 && num[0] !== '0' ){
+        setShowErrNum(false)
+        setStudentName(num)
+    }
+    
+}
+
 
 
 
@@ -110,8 +125,9 @@ const Updatestudent = () => {
                               type="number" required
                               value={phoneNumber}
                               className="form-control"
-                              onChange={(e)=>setPhoneNumber(e.target.value)}
+                              onChange={handleNumChange}
                             />
+                            {showErrNum && <small className="form-text text-danger">It should contain numbers only</small> }
                           </div>
                           <div className=" flex-fill mb-0">
                             <label 

@@ -17,12 +17,32 @@ const ExtraDetails= () => {
     const [state,setState]=useState('')
     const [pincode,setPincode]=useState('')
     const [showErrPin,setShowErrPin] = useState(false)
+    const [showErrEmail,setShowErrEmail] = useState(false)
+
+    const handleEmailChange = (e) =>{
+        const temail = e.target.value
+        const valid = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(temail)
+        if(valid){
+        
+            setShowErrEmail(false)
+            
+            setEmail(temail)            
+        } else {
+            setShowErrEmail(true)
+            setEmail(temail)
+            
+        }
+        console.log(valid)
+    }
 
     const handleNumChange = (e)=>{
         const num = e.target.value
-        if (num.length > 10){
+        const numisValid = /^[1-9][0-9]{9}$/.test(num)
+        const onlyNumber = /^[0-9]*$/.test(num)
+        console.log(numisValid)
+        if (!numisValid && !onlyNumber){
             setShowErrNum(true)
-        } else {
+        } else if(onlyNumber && num.length <=10 && num[0] !== '0' ){
             setShowErrNum(false)
             setMnumber(num)
         }
@@ -59,16 +79,7 @@ const ExtraDetails= () => {
         }
         console.log(valid)
     }
-    const handleEmailChange = (e) =>{
-        const email = e.target.value
-        const valid = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(email)
-        if(valid){
-            setEmail(e.target.value)            
-        } else {
-            
-        }
-        console.log(valid)
-    }
+    
     const handleSubmit=(e)=>{
         e.preventDefault()
         console.log(fname,lname,mnumber,dob,email,gender,city,pincode,state)
@@ -103,8 +114,8 @@ const ExtraDetails= () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>Mobile Number</label>
-                            <input type="number" value={mnumber} className="form-control" placeholder="Mobile no." onChange={handleNumChange}  />
-                            {showErrNum && <small className="form-text text-danger">Number should be not more than 10 digits</small> }
+                            <input type="text" value={mnumber} className="form-control" placeholder="Mobile no." onChange={handleNumChange}  />
+                            {showErrNum && <small className="form-text text-danger">It should contain numbers only</small> }
                         </div>
                     </div>
                     <div className="col-md-6">
@@ -119,6 +130,7 @@ const ExtraDetails= () => {
                         <div className="form-group">
                             <label className='m-1 mt-2 mb-1'>Email address</label>
                             <input type="email" value={email} className="form-control" placeholder="Email ID" onChange={handleEmailChange} />
+                            {showErrEmail && <small className="form-text text-danger">write a valid email</small> }
                         </div>
                     </div>
                     <div className="col-md-6">
