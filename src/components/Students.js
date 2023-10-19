@@ -67,7 +67,10 @@ const Students = () => {
 
                 <tr key={student.studentId}>
                   <td>{student.studentId}</td>
-                  <td>{student.studentName}</td>
+                  <Link  to={"/profile"} state={student}>
+                      <td>{student.studentName}</td>
+                  </Link>            
+                  
                   <td>{student.phoneNumber}</td>
                   <td>{student.age}</td>
                   <td>{student.dateOfBirth}</td>
