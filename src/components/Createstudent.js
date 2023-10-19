@@ -10,11 +10,12 @@ const Createstudent = () => {
     const [sname, setSname] = useState("")
     const [showErrNum,setShowErrNum] = useState(false)
     const [mNumber, setMnumber] = useState("")
-    const [age, setAge] = useState("")
+    const [age, setAge] = useState("20")
     const [showErrAge,setShowErrAge]= useState(false)
     const [dateOfBirth, setDateOfBirth] = useState("")
     const [address, setAddress] = useState("")
     const [showErrAdress,setShowErrAdd] = useState(false)
+    const [coursename,setCourseName] = useState("")
     const navigate = useNavigate();
 
     const handleSnameChange = (e) =>{
@@ -55,15 +56,17 @@ const handleAgeChange = (e) =>{
     const handleSubmit = (e)=> {
       e.preventDefault();
       console.log("clicked");
-
-      axios.post(
-        " https://fiery-advice-production.up.railway.app/student",{
+      const data = {
         studentName:sname,
         phoneNumber:mNumber,
+        course:coursename,
         age:age,
         dateOfBirth:dateOfBirth,
         address:address
-      }).then(res=>{
+      }
+    console.log(data);
+      axios.post(
+        " https://fiery-advice-production.up.railway.app/student",data).then(res=>{
         Swal.fire({
           icon: 'success',
           title: 'Success',
@@ -94,7 +97,7 @@ const handleAgeChange = (e) =>{
                         Create Student
                       </p>
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-6">
-                        <Link to='/readstudent'>
+                        <Link to='/students'>
                         <button
                             type="button"
                             className="btn btn-primary mx-auto"
@@ -137,7 +140,7 @@ const handleAgeChange = (e) =>{
                               Phone Number
                             </label>
                             <input
-                              type="number" required
+                              type="text" required
                                value={mNumber}
                               className="form-control" onChange={handleNumChange}  />
                               {showErrNum && <small className="form-text text-danger">Number should be not more than 10 digits</small> }
@@ -151,19 +154,16 @@ const handleAgeChange = (e) =>{
                           <div className="flex-fill mb-0">
                             <div className='row'>
                               <div className='col-6'>
-                              <label 
-                              className="form-label mb-0"
-                              htmlFor="form3Example4c"
-                            >
-                              Age
-                            </label>
-                            <input
-                              type="number" required
-                              value={age}
-                              className="form-control"
-                              onChange={handleAgeChange}/>
-                              {showErrAge && <small className="form-text text-danger">Age should be between 1-60</small> }
-                            
+                              <div className="form-group">
+                            <label className='form-label'>Course</label>
+                            <select class="form-select" onChange={(e)=>setCourseName(e.target.value)}  aria-label="Default select example">
+                                <option selected disabled>Select Course</option>
+                                <option value="B.tech(AI&DS)">B.tech(AI&DS)</option>
+                                <option value="B.tech(AI&ML)">B.tech(AI&ML)</option>
+                                <option value="B.tech(CSE)">B.tech(CSE)</option>
+                                <option value="B.com">B.com</option>                                
+                            </select>
+                        </div>
                               </div>
                               <div className='col-6'>
                                 <label 
