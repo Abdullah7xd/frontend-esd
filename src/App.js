@@ -13,6 +13,7 @@ import Dashboard from './components/Dashboard';
 import Courses from './components/Courses';
 import Students from './components/Students';
 import ExtraDetails from './components/ExtraDetails';
+import Profile from './components/Profile';
 
 
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/ExtraDetails" element={<ExtraDetails/>} />
+        <Route path="/profile" element={<Profile/>} />
         <Route path="/" element={<Navigate to="/login"/>} />
 
       </Routes>
