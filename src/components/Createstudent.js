@@ -150,7 +150,7 @@ const handleAgeChange = (e) =>{
                          
                         <div className="d-flex flex-row align-items-center mb-4">
                         {/* <i className="fas fa-calander-days "></i> */}
-                        <i class="fa-solid fa-calendar-days fa-lg me-3 mt-5 fa-fw"></i>
+                        <i class="fa-solid fa-book fa-lg me-3 mt-5 fa-fw"></i>
                           <div className="flex-fill mb-0">
                             <div className='row'>
                               <div className='col-6'>

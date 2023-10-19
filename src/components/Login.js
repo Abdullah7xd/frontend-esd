@@ -119,10 +119,11 @@ useEffect(() => {
                             <label
                               className="form-label"
                               htmlFor="form3Example3c"
-                            >
+                              >
                               Name
                             </label>
                             <input
+                              placeholder="Enter your name"
                               type="text"
                               name="username"
                               value={formData.username} 
@@ -143,6 +144,7 @@ useEffect(() => {
                             <input
                               type="password"
                               name="password"
+                              placeholder="Enter your password"
                               onChange={handleChange}
                               value={formData.password}
                               className="form-control"
