@@ -57,8 +57,8 @@ function Popup({getData}) {
                             <label
                               className="form-label"
                               htmlFor="form3Example3c"
-                            >
-                               Department
+                            ><option selected disabled> Department</option>
+                              
                             </label>
                             <input
                               type="text"
@@ -67,7 +67,6 @@ function Popup({getData}) {
                                onChange={(e) => setCourseDescription(e.target.value)}
                               className="form-control"
                             />
-                          </div>
                           <div className=" flex-fill mb-0">
                             <label
                               className="form-label"
@@ -82,6 +81,7 @@ function Popup({getData}) {
                               onChange={(e) => setCourseName(e.target.value)}
                               className="form-control"
                             />
+                          </div>
                           </div>
         </Modal.Body>
         <Modal.Footer>
