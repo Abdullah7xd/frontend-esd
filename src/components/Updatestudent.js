@@ -20,7 +20,7 @@ const Updatestudent = () => {
   const [phoneNumber, setPhoneNumber] = useState(location.state.phoneNumber);
 
   const [course,setCourseName] = useState(location.state.course)
-
+  const [showErrStudentName,setshowErrStudentName] =useState(false)
 
   const navigate = useNavigate();
   const handleNumChange = (e)=>{
@@ -38,18 +38,17 @@ const Updatestudent = () => {
 }
 const handleStudentNameChange = (e) =>{
   const studentname = e.target.value
-  const valid = /^[a-zA-Z ]{1,30}$/.test(studentname)
+  const valid = /^[a-zA-Z ]{0,30}$/.test(studentname)
   if(valid){
-      setStudentName(e.target.value)            
+    setshowErrStudentName(false)
+    setStudentName(studentname) 
+                  
   } else {
-      
+     
+    setStudentName(true)
   }
   console.log(valid)
 }
-
-
-
-
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -79,7 +78,7 @@ const handleStudentNameChange = (e) =>{
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Error in updating',
+        text: e.message,
       });
     })
   };
