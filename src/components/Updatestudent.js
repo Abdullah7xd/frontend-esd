@@ -19,6 +19,8 @@ const Updatestudent = () => {
   const [showErrNum,setShowErrNum] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState(location.state.phoneNumber);
 
+  const [course,setCourseName] = useState(location.state.course)
+
 
   const navigate = useNavigate();
   const handleNumChange = (e)=>{
@@ -48,12 +50,13 @@ const Updatestudent = () => {
         phoneNumber: phoneNumber,
         age: age,
         dateOfBirth: dateOfBirth, 
-        address: address, 
-        email:"hello@gmail.com",
-        city:"city",
-        state:"UP",
-        piCode:"123433",
-        course:"hello"
+        address: address,
+        course:course,
+        // email:"hello@gmail.com",
+        // city:"city",
+        // state:"UP",
+        // piCode:"123433",
+        // course:"hello"
       }
     ).then(() => {
       Swal.fire({
@@ -94,8 +97,8 @@ const Updatestudent = () => {
                         className="mx-1 mx-md-4"
                         onSubmit={handleUpdate}
                       >
-                        <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                        <div className="d-flex flex-row align-items-center mb-2">
+                        <i className="fas fa-user fa-lg me-3 mt-5 fa-fw"></i>
                           <div className=" flex-fill mb-0">
                             <label
                               className="form-label"
@@ -112,9 +115,9 @@ const Updatestudent = () => {
                             />
                           </div>
                         </div>
-                        <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-envelope fa-lg me-3 fa-fw" />
-                          <div className=" flex-fill mb-0">
+                        <div className="d-flex flex-row align-items-center mb-2">
+                        <i className="fas fa-envelope fa-lg me-3 mt-5 fa-fw" />
+                          <div className="flex-fill mb-0">
                             <label 
                               className="form-label"
                               htmlFor="form3Example4c"
@@ -129,58 +132,57 @@ const Updatestudent = () => {
                             />
                             {showErrNum && <small className="form-text text-danger">It should contain numbers only</small> }
                           </div>
-                          <div className=" flex-fill mb-0">
-                            <label 
-                              className="form-label"
-                              htmlFor="form3Example4c"
-                            >
-                              Age
-                            </label>
-                            <input
-                              type="number" required
-                              value={age}
-                              className="form-control"
-                              onChange={(e)=>setAge(e.target.value)}
-                            />
-                          </div>
+                          
                         </div>
-                        <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-book-open fa-lg me-3 fa-fw" />
-                          <div className=" flex-fill mb-0">
+                        <div className="d-flex flex-row align-items-center mb-3">
+                        <i class="fa-solid fa-calendar-days fa-lg me-3 mt-5 fa-fw"></i>                         
+                          <div className='row'>
+                          <div className="col-6">
                             <label 
                               className="form-label"
                               htmlFor="form3Example4c"
                             >
-                              date Of Birth
+                              D.O.B
                             </label>
                             <input
-                              type="text" required
+                              type="date" required
                               value={dateOfBirth}
                               className="form-control"
                               onChange={(e)=>setDateOfBirth(e.target.value)}
                             />
                           </div>
-                          <div className=" flex-fill mb-0">
-                            <label 
-                              className="form-label"
-                              htmlFor="form3Example4c"
-                            >
-                              Address
-                            </label>
-                            <input
-                              type="text" required
-                              value={address}
-                              className="form-control"
-                              onChange={(e)=>setAddress(e.target.value)}
-                            />
+                          <div className='col-6'>
+                            <div className="form-group">
+                              <label className='form-label'>Course</label>
+                              <select class="form-select" onChange={(e) => setCourseName(e.target.value)} value={course} aria-label="Default select example">
+                                <option selected disabled>Select Course</option>
+                                <option value="B.tech(AI&DS)">B.tech(AI&DS)</option>
+                                <option value="B.tech(AI&ML)">B.tech(AI&ML)</option>
+                                <option value="B.tech(CSE)">B.tech(CSE)</option>
+                                <option value="B.com">B.com</option>
+                              </select>
+                            </div>
                           </div>
+                          </div>
+                          
+                          
                         </div>
       
-                       
+                        <div className='row'>                         
+                          
+                    <div className='d-flex flex-row align-items-center mb-3 '>
+                      <i class="fa-solid fa-home   fa-lg me-3 mt-3 fa-fw"></i>
+                        <div className="form-group flex-fill mb-0">
+                            <label className='m-1 mt-3'>Address</label>
+                            <textarea value={address} className="form-control" placeholder="Address" onChange={(e)=>setAddress(e.target.value)}></textarea> 
+                            <small className="form-text text-muted">(Not more than 10 words)</small>
+                        </div>
+                    </div>
+                </div>
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
                             type="submit"
-                            className="btn btn-primary btn-lg"
+                            className="btn btn-primary"
                             
                           >
                             Submit

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './style1.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import Navbar from './Navbar';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const ExtraDetails= () => {
     const [fname,setFname] = useState('')
@@ -18,6 +20,9 @@ const ExtraDetails= () => {
     const [pincode,setPincode]=useState('')
     const [showErrPin,setShowErrPin] = useState(false)
     const [showErrEmail,setShowErrEmail] = useState(false)
+    const [course,setCourse]=useState('')
+
+    const navigate = useNavigate()
 
     const handleEmailChange = (e) =>{
         const temail = e.target.value
@@ -68,9 +73,27 @@ const ExtraDetails= () => {
         }
         console.log(valid)
     }
-
+    function calculateAge(dob) {
+        const dobDate = new Date(dob);
+        const currentDate = new Date();
+        
+        const age = currentDate.getFullYear() - dobDate.getFullYear();
+        
+        // Check if the birthdate has occurred this year, but not yet this month and day
+        if (
+          currentDate.getMonth() < dobDate.getMonth() ||
+          (currentDate.getMonth() === dobDate.getMonth() &&
+            currentDate.getDate() < dobDate.getDate())
+        ) {
+          age--;
+        }
+        
+        return age;
+      }
     const handleDobChange = (e) =>{
-        const dob = e.target.value
+        let dob = e.target.value
+        console.log(dob)      
+        console.log(calculateAge(dob))
         const valid = /^(19\d{2}|20[0-2]\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(dob)
         if(valid){
             setDob(e.target.value)            
@@ -80,10 +103,40 @@ const ExtraDetails= () => {
         console.log(valid)
     }
     
-    const handleSubmit=(e)=>{
-        e.preventDefault()
-        console.log(fname,lname,mnumber,dob,email,gender,city,pincode,state)
-    }
+    const handleSubmit = (e)=> {
+        e.preventDefault();
+        console.log("clicked");
+        const data = {
+          studentName:fname +" "+lname,
+          phoneNumber:mnumber,
+          age:calculateAge(dob),
+          email:email,
+          city:city,
+          state:state,
+          pinCode:pincode,
+          dateOfBirth:dob,
+          address:address,
+          course:course
+        }
+      console.log(data);
+      
+        axios.post(
+          "https://fiery-advice-production.up.railway.app/student",data).then(res=>{
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Student Registered',
+          });
+          navigate('/students');
+        }).catch(e=>{
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: e.message,
+          });
+        })
+        
+      };
      return (
         <div>
         <Navbar/>
@@ -95,13 +148,13 @@ const ExtraDetails= () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>First Name</label>
-                            <input type="text" value={fname} className="form-control" placeholder="First Name" onChange={handleNameChange}/>
+                            <input required type="text" value={fname} className="form-control" placeholder="First Name" onChange={handleNameChange}/>
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>Last Name</label>
-                            <input type="text" value={lname} className="form-control" placeholder="Last Name" onChange={(e)=>setLname(e.target.value)}/>
+                            <input required type="text" value={lname} className="form-control" placeholder="Last Name" onChange={(e)=>setLname(e.target.value)}/>
                         </div>
                     </div>
                 </div>
@@ -114,14 +167,14 @@ const ExtraDetails= () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>Mobile Number</label>
-                            <input type="text" value={mnumber} className="form-control" placeholder="Mobile no." onChange={handleNumChange}  />
+                            <input required type="text" value={mnumber} className="form-control" placeholder="Mobile no." onChange={handleNumChange}  />
                             {showErrNum && <small className="form-text text-danger">It should contain numbers only</small> }
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2' >Date Of Birth</label>
-                            <input type="date"value={dob} className="form-control" placeholder="dob" onChange={handleDobChange}/>
+                            <input required type="date"value={dob} className="form-control" placeholder="dob" onChange={handleDobChange}/>
                         </div>
                     </div>
                 </div>
@@ -129,7 +182,7 @@ const ExtraDetails= () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2 mb-1'>Email address</label>
-                            <input type="email" value={email} className="form-control" placeholder="Email ID" onChange={handleEmailChange} />
+                            <input required type="email" value={email} className="form-control" placeholder="Email ID" onChange={handleEmailChange} />
                             {showErrEmail && <small className="form-text text-danger">write a valid email</small> }
                         </div>
                     </div>
@@ -138,15 +191,15 @@ const ExtraDetails= () => {
                             <label className='m-1 mt-2'>Gender</label>
                             <div className='row m-1' onChange={(e)=>setGender(e.target.value)}>
                                     <div className='col-4' >
-                                    <input type="radio"  className="form-check-input" value="Male" name="Gender" />
+                                    <input required type="radio"  className="form-check-input" value="Male" name="Gender" />
                                     <label className="form-check-label">Male</label>
                                     </div>
                                     <div className='col-4'>
-                                        <input type="radio" className="form-check-input" value="Female" name="Gender" />
+                                        <input required type="radio" className="form-check-input" value="Female" name="Gender" />
                                         <label className="form-check-label">Female</label>
                                     </div>
                                     <div className='col-4'>
-                                        <input type="radio" className="form-check-input" value="Other" name="Gender" />
+                                        <input required type="radio" className="form-check-input" value="Other" name="Gender" />
                                         <label className="form-check-label">Other</label>
                                     </div>
                             </div>
@@ -165,7 +218,7 @@ const ExtraDetails= () => {
                     <div className='col col-lg-6 col-12'>
                         <div className="form-group">
                             <label className='form-label'>Course</label>
-                            <select class="form-select" aria-label="Default select example">
+                            <select class="form-select" aria-label="Default select example" onChange={(e)=>setCourse(e.target.value)}>
                                 <option selected disabled>Select Course</option>
                                 <option value="B.tech(AI&DS)">B.tech(AI&DS)</option>
                                 <option value="B.tech(AI&ML)">B.tech(AI&ML)</option>
@@ -181,20 +234,20 @@ const ExtraDetails= () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>City</label>
-                            <input type="text" value={city} className="form-control" placeholder="City" onChange={(e)=>setCity(e.target.value)} />
+                            <input required type="text" value={city} className="form-control" placeholder="City" onChange={(e)=>setCity(e.target.value)} />
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>Pin Code</label>
-                            <input type="number" value={pincode} className="form-control" placeholder="Pin Code" onChange={handlePinChange}/>
+                            <input required type="number" value={pincode} className="form-control" placeholder="Pin Code" onChange={handlePinChange}/>
                             {showErrPin && <small className="form-text text-danger">Number should be not more than 6 digits</small> }
                         </div>
                     </div>
                 </div>
                 <div className="form-group">
                     <label className='m-1 mt-2'>State</label>
-                    <input type="text" value={state} className="form-control" placeholder="State" onChange={(e)=>setState(e.target.value)}/>
+                    <input required type="text" value={state} className="form-control" placeholder="State" onChange={(e)=>setState(e.target.value)}/>
                     <small className="form-text text-muted">(No abbreviation)</small>
                 </div>
                 <div className="row">
