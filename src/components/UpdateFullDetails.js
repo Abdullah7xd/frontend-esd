@@ -4,23 +4,26 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import Swal from 'sweetalert2';
 import Navbar from './Navbar';
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ExtraDetails= () => {
-    const [fname,setFname] = useState('')
-    const [lname,setLname] =useState('')
-    const [mnumber,setMnumber]=useState('')
-    const [showErrNum,setShowErrNum] = useState(false)
-    const [dob,setDob]=useState('')
-    const [email,setEmail]=useState('')
-    const [gender,setGender]=useState('')
-    const [address,setAddress]=useState('')
-    const [city,setCity]=useState('')
 
-    const [state,setState]=useState('')
+    const location = useLocation()
+    console.log(location.state)
+    const [id,setId] = useState(location.state.studentId)
+    const [name,setName] =useState(location.state.studentName)
+    const [mnumber,setMnumber]=useState(location.state.phoneNumber)
+    const [showErrNum,setShowErrNum] = useState(false)
+    const [dob,setDob]=useState(location.state.dateOfBirth)
+    const [email,setEmail]=useState(location.state.email)
+    const [gender,setGender]=useState('')
+    const [address,setAddress]=useState(location.state.address)
+    const [city,setCity]=useState(location.state.city)
+
+    const [state,setState]=useState(location.state.state)
     const [showErrState,setShowErrState] = useState(false)
 
-    const [pincode,setPincode]=useState('')
+    const [pincode,setPincode]=useState(location.state.pinCode)
     const [showErrPin,setShowErrPin] = useState(false)
     const [showErrEmail,setShowErrEmail] = useState(false)
     const [showErrCity,setShowErrCity] = useState(false)
@@ -84,24 +87,24 @@ const ExtraDetails= () => {
         const valid = /^[a-zA-Z ]{0,30}$/.test(name)
         if(valid){
             setshowErrFname(false)
-            setFname(name)            
+            setName(name)            
         } else {
             setshowErrFname(true)
             
         }
         console.log(valid)
     }
-    const handleLnameChange = (e) =>{
-        const lname = e.target.value
-        const valid = /^[a-zA-Z ]{0,30}$/.test(lname)
-        if(valid){
-            setshowErrLname(false)
-            setLname(lname)            
-        } else {
-            setshowErrLname(true)
-        }
-        console.log(valid)
-    }
+    // const handleLnameChange = (e) =>{
+    //     const lname = e.target.value
+    //     const valid = /^[a-zA-Z ]{0,30}$/.test(lname)
+    //     if(valid){
+    //         setshowErrLname(false)
+    //         setLname(lname)            
+    //     } else {
+    //         setshowErrLname(true)
+    //     }
+    //     console.log(valid)
+    // }
     const handleCityChange = (e) =>{
         const city = e.target.value
         const valid = /^[a-zA-Z ]{0,30}$/.test(city)
@@ -159,7 +162,7 @@ const ExtraDetails= () => {
         e.preventDefault();
         console.log("clicked");
         const data = {
-          studentName:fname +" "+lname,
+          studentName:name,
           phoneNumber:mnumber,
           age:calculateAge(dob),
           email:email,
@@ -172,12 +175,12 @@ const ExtraDetails= () => {
         }
       console.log(data);
       
-        axios.post(
-          "https://fiery-advice-production.up.railway.app/student",data).then(res=>{
+        axios.put(
+          `https://fiery-advice-production.up.railway.app/student/${id}`,data).then(res=>{
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'Student Registered',
+            text: 'Student Updated',
           });
           navigate('/students');
         }).catch(e=>{
@@ -194,23 +197,17 @@ const ExtraDetails= () => {
         <Navbar/>
         <div className="container1 student-portal m-3 mx-auto p-5 rounded mt-5 w-75">
             
-            <h1>Create Student</h1>
+            <h1>  Edit Details</h1>
             <form onSubmit={handleSubmit} id="form1">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-12">
                         <div className="form-group">
-                            <label className='m-1 mt-2'>First Name</label>
-                            <input required type="text" value={fname} className="form-control" placeholder="First Name" onChange={handleNameChange}/>
+                            <label className='m-1 mt-2'>Name</label>
+                            <input required type="text" value={name} className="form-control" placeholder="First Name" onChange={handleNameChange}/>
                             {showErrfname && <small className="form-text text-danger">write a valid first name</small> }
                         </div>
                     </div>
-                    <div className="col-md-6">
-                        <div className="form-group">
-                            <label className='m-1 mt-2'>Last Name</label>
-                            <input required type="text" value={lname} className="form-control" placeholder="Last Name" onChange={handleLnameChange}/>
-                            {showErrLname && <small className="form-text text-danger">write a valid last name</small> }
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="menu mt-4" >
         
@@ -273,7 +270,7 @@ const ExtraDetails= () => {
                     <div className='col col-lg-6 col-12'>
                         <div className="form-group">
                             <label className='form-label'>Course</label>
-                            <select class="form-select" aria-label="Default select example" onChange={(e)=>setCourse(e.target.value)}>
+                            <select required class="form-select" aria-label="Default select example" onChange={(e)=>setCourse(e.target.value)}>
                                 <option selected disabled>Select Course</option>
                                 <option value="B.tech(AI&DS)">B.tech(AI&DS)</option>
                                 <option value="B.tech(AI&ML)">B.tech(AI&ML)</option>

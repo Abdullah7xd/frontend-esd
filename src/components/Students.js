@@ -55,7 +55,7 @@ const Students = () => {
         <div className='col col-9 mx-auto mt-5'>
           <h2 className="read-student-heading">Registered Students</h2>
           <div className='search-bar mb-3'>
-            <div className="search-input">
+            <div className="search-input mr-0">
               <i className="fas fa-search search-icon"></i>
               <input
                 type="text"
@@ -98,7 +98,7 @@ const Students = () => {
                       <td>{student.address}</td>
                       <td>{student.course}</td>
                       <td>
-                        <Link to="/updatestudent" state={student}>
+                        <Link to="/updatedetails" state={student}>
                           <button className="btn btn-info mb-1 w-100">
                             <i className="fa-regular fa-pen-to-square"></i>
                           </button>

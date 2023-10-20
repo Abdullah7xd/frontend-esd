@@ -14,6 +14,7 @@ import Courses from './components/Courses';
 import Students from './components/Students';
 import ExtraDetails from './components/ExtraDetails';
 import Profile from './components/Profile';
+import UpdateFullDetails from './components/UpdateFullDetails'
 
 
 
@@ -37,7 +38,9 @@ function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/ExtraDetails" element={<ExtraDetails/>} />
         <Route path="/profile" element={<Profile/>} />
-        <Route path="/" element={<Navigate to="/login"/>} />
+        <Route path="/" element={<Navigate to="/login"/>} />        
+        <Route path="/updatedetails" element={<UpdateFullDetails/>} />
+ 
 
       </Routes>
       </BrowserRouter>
