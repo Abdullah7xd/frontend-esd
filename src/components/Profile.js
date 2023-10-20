@@ -37,6 +37,19 @@ const Profile= () => {
                 <div className='col-6'>
                 <h4>State : {state}</h4>
                 </div>
+                <div className='col-6'>                    
+                    <h4>PhoneNumber : {phoneNumber}</h4>
+                </div>
+                <div className='col-6'>
+                    
+                <h4>Email : {email}</h4>
+                </div>
+                <div className='col-6'>
+                    <h4>Address : {address}</h4>
+                </div>
+                <div className='col-6'>
+                <h4>PinCode : {pinCode}</h4>
+                </div>
 
             </div>
            

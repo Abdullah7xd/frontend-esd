@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const ExtraDetails= () => {
     const [fname,setFname] = useState('')
-    const [lname,setLname ] =useState('')
+    const [lname,setLname] =useState('')
     const [mnumber,setMnumber]=useState('')
     const [showErrNum,setShowErrNum] = useState(false)
     const [dob,setDob]=useState('')
@@ -68,6 +68,36 @@ const ExtraDetails= () => {
         const valid = /^[a-zA-Z ]{1,30}$/.test(name)
         if(valid){
             setFname(e.target.value)            
+        } else {
+            
+        }
+        console.log(valid)
+    }
+    const handleLnameChange = (e) =>{
+        const lname = e.target.value
+        const valid = /^[a-zA-Z ]{1,30}$/.test(lname)
+        if(valid){
+            setLname(e.target.value)            
+        } else {
+            
+        }
+        console.log(valid)
+    }
+    const handleCityChange = (e) =>{
+        const city = e.target.value
+        const valid = /^[a-zA-Z ]{1,30}$/.test(city)
+        if(valid){
+            setCity(e.target.value)            
+        } else {
+            
+        }
+        console.log(valid)
+    }
+    const handleStateChange = (e) =>{
+        const state = e.target.value
+        const valid = /^[a-zA-Z ]{1,30}$/.test(state)
+        if(valid){
+            setState(e.target.value)            
         } else {
             
         }
@@ -154,7 +184,7 @@ const ExtraDetails= () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>Last Name</label>
-                            <input required type="text" value={lname} className="form-control" placeholder="Last Name" onChange={(e)=>setLname(e.target.value)}/>
+                            <input required type="text" value={lname} className="form-control" placeholder="Last Name" onChange={handleLnameChange}/>
                         </div>
                     </div>
                 </div>
@@ -234,7 +264,7 @@ const ExtraDetails= () => {
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>City</label>
-                            <input required type="text" value={city} className="form-control" placeholder="City" onChange={(e)=>setCity(e.target.value)} />
+                            <input required type="text" value={city} className="form-control" placeholder="City" onChange={handleCityChange} />
                         </div>
                     </div>
                     <div className="col-md-6">
@@ -247,7 +277,7 @@ const ExtraDetails= () => {
                 </div>
                 <div className="form-group">
                     <label className='m-1 mt-2'>State</label>
-                    <input required type="text" value={state} className="form-control" placeholder="State" onChange={(e)=>setState(e.target.value)}/>
+                    <input required type="text" value={state} className="form-control" placeholder="State" onChange={handleStateChange}/>
                     <small className="form-text text-muted">(No abbreviation)</small>
                 </div>
                 <div className="row">
