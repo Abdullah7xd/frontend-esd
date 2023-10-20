@@ -29,7 +29,7 @@ const Students = () => {
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'User deleted !!',
+            text: 'Course deleted !!',
           });
       }).catch(e=>{
         console.log(e)        
@@ -84,7 +84,7 @@ const Students = () => {
                     
 
                     <button className='btn btn-warning' onClick={() => handleDelete(course.courseId)}>
-                      Delete
+                    <i class="fa-solid fa-trash"></i>
                     </button>
 
                   </td>

@@ -82,12 +82,12 @@ const Students = () => {
                       <button
                         className="btn btn-info mb-1 w-100"
                       >
-                        Update
+                        <i class="fa-regular fa-pen-to-square"></i>
                       </button>
                     </Link>
 
                     <button className='btn btn-warning w-100' onClick={() => handleDelete(student.studentId)}>
-                      Delete
+                    <i class="fa-solid fa-trash"></i>
                     </button>
 
                   </td>

@@ -167,7 +167,7 @@ const handleAgeChange = (e) =>{
                               </div>
                               <div className='col-6'>
                                 <label 
-                                className="form-label mb-0"
+                                className="form-label"
                                 htmlFor="form3Example4c"
                                 >
                                   D.O.B
