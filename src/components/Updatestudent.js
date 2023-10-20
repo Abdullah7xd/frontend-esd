@@ -36,6 +36,16 @@ const Updatestudent = () => {
     }
     
 }
+const handleStudentNameChange = (e) =>{
+  const studentname = e.target.value
+  const valid = /^[a-zA-Z ]{1,30}$/.test(studentname)
+  if(valid){
+      setStudentName(e.target.value)            
+  } else {
+      
+  }
+  console.log(valid)
+}
 
 
 
@@ -110,7 +120,7 @@ const Updatestudent = () => {
                               type="text"
                               name="studentname"
                               value={studentname} 
-                              onChange={(e)=>setStudentName(e.target.value)}
+                              onChange={handleStudentNameChange}
                               className="form-control"
                             />
                           </div>
