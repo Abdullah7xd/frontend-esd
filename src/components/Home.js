@@ -2,7 +2,7 @@ import React from 'react'
 import icon5 from './images/icon5.png'
 import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
-import './style1.css';
+// import './style1.css';
 
 const Home = () => {
   return (
