@@ -16,10 +16,17 @@ const ExtraDetails= () => {
     const [gender,setGender]=useState('')
     const [address,setAddress]=useState('')
     const [city,setCity]=useState('')
+
     const [state,setState]=useState('')
+    const [showErrState,setShowErrState] = useState(false)
+
     const [pincode,setPincode]=useState('')
     const [showErrPin,setShowErrPin] = useState(false)
     const [showErrEmail,setShowErrEmail] = useState(false)
+    const [showErrCity,setShowErrCity] = useState(false)
+    const [showErrDob,setShowErrDob] = useState(false)
+    const [showErrfname,setshowErrFname] = useState(false)
+    const [showErrLname,setshowErrLname] = useState(false)
     const [course,setCourse]=useState('')
 
     const navigate = useNavigate()
@@ -27,15 +34,19 @@ const ExtraDetails= () => {
     const handleEmailChange = (e) =>{
         const temail = e.target.value
         const valid = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/.test(temail)
+        
         if(valid){
         
-            setShowErrEmail(false)
-            
+            setShowErrEmail(false)            
             setEmail(temail)            
         } else {
             setShowErrEmail(true)
             setEmail(temail)
             
+        }
+        if (temail.length === 0)
+        {
+            setShowErrEmail(false)
         }
         console.log(valid)
     }
@@ -55,39 +66,47 @@ const ExtraDetails= () => {
     }
     const handlePinChange = (e)=>{
         const num = e.target.value
-        if (num.length < 6){
+        const isValid = /^[0-9]{0,6}$/.test(num)
+        if (num.length < 6 && isValid){
                 setPincode(num)
             setShowErrPin(true)
         } else if (num.length == 6){
             setShowErrPin(false)
             setPincode(num)
         }
+        if (num.length === 0)
+        {
+            setShowErrPin(false)
+        }
     }
     const handleNameChange = (e) =>{
         const name = e.target.value
-        const valid = /^[a-zA-Z ]{1,30}$/.test(name)
+        const valid = /^[a-zA-Z ]{0,30}$/.test(name)
         if(valid){
-            setFname(e.target.value)            
+            setshowErrFname(false)
+            setFname(name)            
         } else {
+            setshowErrFname(true)
             
         }
         console.log(valid)
     }
     const handleLnameChange = (e) =>{
         const lname = e.target.value
-        const valid = /^[a-zA-Z ]{1,30}$/.test(lname)
+        const valid = /^[a-zA-Z ]{0,30}$/.test(lname)
         if(valid){
-            setLname(e.target.value)            
+            setshowErrLname(false)
+            setLname(lname)            
         } else {
-            
+            setshowErrLname(true)
         }
         console.log(valid)
     }
     const handleCityChange = (e) =>{
         const city = e.target.value
-        const valid = /^[a-zA-Z ]{1,30}$/.test(city)
+        const valid = /^[a-zA-Z ]{0,30}$/.test(city)
         if(valid){
-            setCity(e.target.value)            
+            setCity(city)            
         } else {
             
         }
@@ -95,11 +114,12 @@ const ExtraDetails= () => {
     }
     const handleStateChange = (e) =>{
         const state = e.target.value
-        const valid = /^[a-zA-Z ]{1,30}$/.test(state)
+        const valid = /^[a-zA-Z ]{0,100}$/.test(state)
         if(valid){
-            setState(e.target.value)            
+            setShowErrState(false)
+            setState(state)            
         } else {
-            
+            setShowErrState(true)
         }
         console.log(valid)
     }
@@ -124,13 +144,15 @@ const ExtraDetails= () => {
         let dob = e.target.value
         console.log(dob)      
         console.log(calculateAge(dob))
-        const valid = /^(19\d{2}|20[0-2]\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(dob)
-        if(valid){
-            setDob(e.target.value)            
-        } else {
-            
+        const tage = calculateAge(dob)
+        if(tage <2 || tage > 120)
+        {
+            setShowErrDob(true)
         }
-        console.log(valid)
+        else{
+            setShowErrDob(false)
+            setDob(dob)
+        }
     }
     
     const handleSubmit = (e)=> {
@@ -179,12 +201,14 @@ const ExtraDetails= () => {
                         <div className="form-group">
                             <label className='m-1 mt-2'>First Name</label>
                             <input required type="text" value={fname} className="form-control" placeholder="First Name" onChange={handleNameChange}/>
+                            {showErrfname && <small className="form-text text-danger">write a valid first name</small> }
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>Last Name</label>
                             <input required type="text" value={lname} className="form-control" placeholder="Last Name" onChange={handleLnameChange}/>
+                            {showErrLname && <small className="form-text text-danger">write a valid last name</small> }
                         </div>
                     </div>
                 </div>
@@ -205,6 +229,7 @@ const ExtraDetails= () => {
                         <div className="form-group">
                             <label className='m-1 mt-2' >Date Of Birth</label>
                             <input required type="date"value={dob} className="form-control" placeholder="dob" onChange={handleDobChange}/>
+                            {showErrDob && <small className="form-text text-danger">Enter valid dob for a student </small> }
                         </div>
                     </div>
                 </div>
@@ -265,12 +290,13 @@ const ExtraDetails= () => {
                         <div className="form-group">
                             <label className='m-1 mt-2'>City</label>
                             <input required type="text" value={city} className="form-control" placeholder="City" onChange={handleCityChange} />
+                            {showErrCity && <small className="form-text text-danger">write a valid city</small> }
                         </div>
                     </div>
                     <div className="col-md-6">
                         <div className="form-group">
                             <label className='m-1 mt-2'>Pin Code</label>
-                            <input required type="number" value={pincode} className="form-control" placeholder="Pin Code" onChange={handlePinChange}/>
+                            <input required type="text" value={pincode} className="form-control" placeholder="Pin Code" onChange={handlePinChange}/>
                             {showErrPin && <small className="form-text text-danger">Number should be not more than 6 digits</small> }
                         </div>
                     </div>
@@ -278,7 +304,7 @@ const ExtraDetails= () => {
                 <div className="form-group">
                     <label className='m-1 mt-2'>State</label>
                     <input required type="text" value={state} className="form-control" placeholder="State" onChange={handleStateChange}/>
-                    <small className="form-text text-muted">(No abbreviation)</small>
+                    {showErrState && <small className="form-text text-danger">write a valid state</small> }
                 </div>
                 <div className="row">
                     <div className="col-md-6 mx-auto">

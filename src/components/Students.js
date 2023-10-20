@@ -45,6 +45,7 @@ const Students = () => {
 
     <div>
       <Navbar />
+      
       <div className='row'>
         <div className='col col-9 mx-auto mt-5'>
           <h2 className="read-student-heading">Registered Students</h2>
