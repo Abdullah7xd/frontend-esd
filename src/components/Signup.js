@@ -52,12 +52,7 @@ const Signup = () => {
 
 
    }
-   const handleCpassword =(e) =>{
-    setCpassword(
-      e.target.value
-    )
-    console.log("password confirmed");
-   }
+   
    
 
 
@@ -110,22 +105,7 @@ const Signup = () => {
                      
                     </div>
                   </div>
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <i className="fas fa-key fa-lg me-3 mt-5 fa-fw" />
-                    <div className=" flex-fill mb-0">
-                    <label className="form-label" htmlFor="form3Example4cd">
-                        Confirm your password
-                      </label>
-                      <input
-                        type="password"
-                        id="form3Example4cd"
-                        onChange={handleCpassword}
-                        className="form-control"
-                        value={cpassword}
-                      />
-                      
-                    </div>
-                  </div>
+                 
                   {/* <div className="form-check d-flex justify-content-center mb-5">
                     <input
                       className="form-check-input me-2"

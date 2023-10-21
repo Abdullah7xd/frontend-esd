@@ -127,10 +127,10 @@ const ExtraDetails= () => {
         console.log(valid)
     }
     function calculateAge(dob) {
-        const dobDate = new Date(dob);
-        const currentDate = new Date();
+        let dobDate = new Date(dob);
+        let currentDate = new Date();
         
-        const age = currentDate.getFullYear() - dobDate.getFullYear();
+        let temp_age = currentDate.getFullYear() - dobDate.getFullYear();
         
         // Check if the birthdate has occurred this year, but not yet this month and day
         if (
@@ -138,16 +138,16 @@ const ExtraDetails= () => {
           (currentDate.getMonth() === dobDate.getMonth() &&
             currentDate.getDate() < dobDate.getDate())
         ) {
-          age--;
+          temp_age--;
         }
         
-        return age;
+        return temp_age;
       }
     const handleDobChange = (e) =>{
         let dob = e.target.value
         console.log(dob)      
         console.log(calculateAge(dob))
-        const tage = calculateAge(dob)
+        let tage = calculateAge(dob)
         if(tage <2 || tage > 120)
         {
             setShowErrDob(true)
