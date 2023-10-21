@@ -99,7 +99,7 @@ const Students = () => {
                       <td>{student.course}</td>
                       <td>
                         <Link to="/updatedetails" state={student}>
-                          <button className="btn btn-info mb-1 w-100">
+                          <button className="btn btn-info mb-1 w-100" title="Update">
                             <i className="fa-regular fa-pen-to-square"></i>
                           </button>
                         </Link>
