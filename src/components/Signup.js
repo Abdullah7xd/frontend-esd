@@ -26,7 +26,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted");
-    if (password === cpassword){
+    // if (password === cpassword){
     // Make the Axios POST request
     axios.post("http://localhost:8080/user/registration", {
         username: name,
@@ -54,14 +54,14 @@ const Signup = () => {
         // Handle any errors that occur during the request
         console.error('Error in Axios request:', error);
     });
-  }  
-  else{
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: 'Password and confirm password not matched. Please try again.'
-  });
-  }
+  // }  
+  // else{
+  //   Swal.fire({
+  //     icon: 'error',
+  //     title: 'Error',
+  //     text: 'Password and confirm password not matched. Please try again.'
+  // });
+  // }
     
 }
 
