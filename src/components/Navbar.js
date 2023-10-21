@@ -65,7 +65,7 @@ const Navbar = () => {
               
               <NavLink className="nav-link  mx-3" to="/login">
                 <button type="button" className="btn btn-primary">
-                  Logout
+                  Log out
                 </button>
               </NavLink>
             </div>
