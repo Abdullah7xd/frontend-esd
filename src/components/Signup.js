@@ -58,7 +58,7 @@ const Signup = () => {
 
   return (
     <div>
-      <Navbar/>
+      {/* <Navbar/> */}
       <section className="" style={{ backgroundColor: "#eee" }}>
   <div className="container h-100">
     <div className="row d-flex justify-content-center align-items-center h-100">
