@@ -35,7 +35,7 @@ const Navbar = () => {
             {/* Left links */}
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 ml-5">
               <li className="nav-item">
-                <NavLink className="nav-link hover" to="/home">
+                <NavLink className="nav-link hover bold-text" to="/home">
                   Home
                 </NavLink>
               </li>

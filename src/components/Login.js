@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 
 function Login () {
-    const [data,setData] = useState([]);
+    const [data,setData] = useState("");
     const [loading,setLoading] = useState(true);
 
     const [formData,setFormData] = useState(
@@ -27,16 +27,9 @@ function Login () {
         });
     };
 
-useEffect(() => {
-    fetch('fiery-advice-production.up.railway.app/user/login?'+'username='+formData.username+'&password='+formData.password)
-    .then((response)=> response.json())
-    .then((data)=>{ 
-      console.log(data + 'abcd');     
-        setData(data);
-        setLoading(false);       
-    })
-    .catch((error)=>console.error('Problem fetching',error));
-    } ,[]);
+// useEffect(() => {
+    // fetch('fiery-advice-production.up.railway.app/user/login?'+'username='+formData.username+'&password='+formData.password)
+    // } ,[]);
 
     // if(loading) {
     //     return <div> Loading ........</div>;
@@ -44,12 +37,25 @@ useEffect(() => {
 
 
     const navigate = useNavigate();
-    const handleSubmit = (e) => {
-  e.preventDefault();
+    const handleSubmit = async (e) => {
+      e.preventDefault();
 
   // Extract email and password from the formData state
-  const { username, password } = formData;
 
+  await fetch('http://localhost:8080/user/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json' // Specify the content type for the request body
+  },
+  body: JSON.stringify(formData)
+  })
+  // .then((response)=> response.json())
+  .then((data)=>{ 
+    console.log(data + ' abcd');  
+      setData(data);
+      setLoading(false);   
+      
+  const { username, password } = formData;
   if (!username || !password) {
     // Display an error message if email or password is not provided
     Swal.fire({
@@ -60,22 +66,8 @@ useEffect(() => {
     return; // Exit early if email or password is not provided
   }
 
-  // Check if the user has agreed to the terms
-  // const termsAgreed = document.getElementById('form2Example3c').checked;
-  // if (!termsAgreed) {
-  //   // Display an error message if terms are not agreed
-  //   Swal.fire({
-  //     icon: 'error',
-  //     title: 'Error',
-  //     text: 'Please agree to the terms of service.',
-  //   });
-  //   return; // Exit early if terms are not agreed
-  // }
-
-  // Assume you have some logic to handle login and get the response.
-  // For demonstration purposes, let's simulate a successful login with status 200.
-  const res = { status: 200 };
-
+  const res = data
+  console.log(res)
   if (res.status === 200) {
     // Display a success message if login is successful
     Swal.fire({
@@ -83,8 +75,6 @@ useEffect(() => {
       title: 'Success',
       text: 'User Logged In Successfully!!',
     });
-
-    // Navigate to the desired location after successful login.
     navigate('/home');
   } else {
     // Display an error message if login fails
@@ -94,6 +84,8 @@ useEffect(() => {
       text: 'Login Failed. Please check your credentials.',
     });
   }
+  })
+  .catch((error)=>console.error('Problem fetching',error));
 };
 
       return(
@@ -152,23 +144,10 @@ useEffect(() => {
                           </div>
                         </div>
       
-                        {/* <div className="form-check d-flex justify-content-center mb-5">
-                          <input
-                            className="form-check-input me-2"
-                            type="checkbox"
-                            defaultValue=""
-                            id="form2Example3c"
-                          />
-                          <label
-                            className="form-check-label"
-                            htmlFor="form2Example3"
-                          >
-                            I agree all statements in{" "}
-                            <a href="#!">Terms of service</a>
-                          </label>
-                        </div> */}
+                        
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
+                            onSubmit={handleSubmit}
                             type="submit"
                             className="btn btn-primary"
                           >

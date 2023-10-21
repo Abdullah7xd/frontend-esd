@@ -176,7 +176,7 @@ const ExtraDetails= () => {
       console.log(data);
       
         axios.put(
-          `https://fiery-advice-production.up.railway.app/student/${id}`,data).then(res=>{
+          `http://localhost:8080/student/${id}`,data).then(res=>{
           Swal.fire({
             icon: 'success',
             title: 'Success',

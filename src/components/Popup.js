@@ -15,7 +15,7 @@ function Popup({getData}) {
   const handleCreate=()=>{
     console.log(courseDescription,coursename)
     axios.post(
-      " https://fiery-advice-production.up.railway.app/course",{
+      "http://localhost:8080/course/create",{
     courseName:coursename,
     courseDescription:courseDescription
    }).then(res=>{
@@ -53,21 +53,8 @@ function Popup({getData}) {
           <Modal.Title>Add Course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+
         <div className=" flex-fill mb-0">
-                            <label
-                              className="form-label"
-                              htmlFor="form3Example3c"
-                            ><option selected disabled> Department</option>
-                              
-                            </label>
-                            <input
-                              type="text"
-                              name="courseDescription"
-                               value={courseDescription}
-                               onChange={(e) => setCourseDescription(e.target.value)}
-                              className="form-control"
-                            />
-                          <div className=" flex-fill mb-0">
                             <label
                               className="form-label"
                               htmlFor="form3Example3c"
@@ -82,6 +69,21 @@ function Popup({getData}) {
                               className="form-control"
                             />
                           </div>
+        <div className=" flex-fill mb-0">
+                            <label
+                              className="form-label"
+                              htmlFor="form3Example3c"
+                            ><option selected disabled> Course Description</option>
+                              
+                            </label>
+                            <input
+                              type="text"
+                              name="courseDescription"
+                               value={courseDescription}
+                               onChange={(e) => setCourseDescription(e.target.value)}
+                              className="form-control"
+                            />
+                          
                           </div>
         </Modal.Body>
         <Modal.Footer>

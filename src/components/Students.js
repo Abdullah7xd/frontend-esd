@@ -12,7 +12,7 @@ const Students = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   function getData() {
-    axios.get('https://fiery-advice-production.up.railway.app/student')
+    axios.get('http://localhost:8080/student')
       .then((res) => {
         const tdata = res.data.filter(stu => stu.status === 1);
         setData(tdata);
@@ -20,7 +20,7 @@ const Students = () => {
   }
 
   function handleDelete(studentId) {
-    axios.delete(`https://fiery-advice-production.up.railway.app/student/${studentId}`)
+    axios.delete(`http://localhost:8080/student/${studentId}`)
       .then(() => {
         getData();
         Swal.fire({

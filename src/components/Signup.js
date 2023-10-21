@@ -23,27 +23,48 @@ const Signup = () => {
   }
 
   const navigate = useNavigate();
-   const handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Formsubmitted");
-    axios.post(
-      "fiery-advice-production.up.railway.app/user/registration",{
-      username:name,
-      password:password,
-      confirmPassword:cpassword
-    
+    console.log("Form submitted");
+    if (password === cpassword){
+    // Make the Axios POST request
+    axios.post("http://localhost:8080/user/registration", {
+        username: name,
+        password: password,
+    })
+    .then(response => {
+        if (response.data === "Registration successful") {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Registration was successful. Please Login now.'
+        });
+            // If the response indicates success, navigate to the login page
+            navigate('/login');
+        } else {
+            // If the response does not indicate success, show an error message
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Registration was not successful. Please try again.'
+            });
+        }
+    })
+    .catch(error => {
+        // Handle any errors that occur during the request
+        console.error('Error in Axios request:', error);
     });
-    navigate('/login');
-    if (password!==cpassword){
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Passwords do not match. Please re-enter the passwords.'
-      });
-      
-    }
+  }  
+  else{
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Password and confirm password not matched. Please try again.'
+  });
+  }
+    
+}
 
-   }
    const handlePassword = (e) =>{
     setPassword(
       e.target.value

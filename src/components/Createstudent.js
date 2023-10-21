@@ -3,85 +3,96 @@ import React, { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Navbar from './Navbar'
 import Swal from 'sweetalert2'
-import './style1.css'; 
+import './style1.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { isInteger } from 'formik'
 const Createstudent = () => {
-    const [sname, setSname] = useState("")
-    const [showErrNum,setShowErrNum] = useState(false)
-    const [mNumber, setMnumber] = useState("")
-    const [age, setAge] = useState("20")
-    const [showErrAge,setShowErrAge]= useState(false)
-    const [dateOfBirth, setDateOfBirth] = useState("")
-    const [address, setAddress] = useState("")
-    const [showErrAdress,setShowErrAdd] = useState(false)
-    const [coursename,setCourseName] = useState("")
-    const navigate = useNavigate();
+  const [sname, setSname] = useState("")
+  const [showErrNum, setShowErrNum] = useState(false)
+  const [mNumber, setMnumber] = useState("")
+  const [age, setAge] = useState("20")
+  const [showErrAge, setShowErrAge] = useState(false)
+  const [dateOfBirth, setDateOfBirth] = useState("")
+  const [address, setAddress] = useState("")
+  const [showErrAdress, setShowErrAdd] = useState(false)
+  const [coursename, setCourseName] = useState("")
+  const [email, setEmail] = useState("")
+  const navigate = useNavigate();
 
-    const handleSnameChange = (e) =>{
-      const sname = e.target.value
-      const valid = /^[a-zA-Z ]{1,30}$/.test(sname)
-      if(valid){
-          setSname(e.target.value)            
-      } else {
-          
-      }
-      console.log(valid)
+  const today = new Date();
+  const minAge = 20; // Minimum age required
+  today.setFullYear(today.getFullYear() - minAge);
+
+  const handleEmailChange = (e) =>{
+     setEmail(e.target.value)
   }
-  const handleNumChange = (e)=>{
-    const num = e.target.value
-    if (num.length > 10){
-        setShowErrNum(true)
+
+
+  const handleSnameChange = (e) => {
+    const sname = e.target.value
+    const valid = /^[a-zA-Z ]{1,30}$/.test(sname)
+    if (valid) {
+      setSname(e.target.value)
     } else {
-        setShowErrNum(false)
-        setMnumber(num)
+
     }
-    
-}
-const handleAgeChange = (e) =>{
-  const age = e.target.value
-  // const isnum = /[^0-9]/.test(age)
-  const valid = age <=60 && age >=0
-  if(valid){
+    console.log(valid)
+  }
+  const handleNumChange = (e) => {
+    const num = e.target.value
+    if (num.length > 10) {
+      setShowErrNum(true)
+    } else {
+      setShowErrNum(false)
+      setMnumber(num)
+    }
+
+  }
+  const handleAgeChange = (e) => {
+    const age = e.target.value
+    // const isnum = /[^0-9]/.test(age)
+    const valid = age <= 60 && age >= 0
+    if (valid) {
       console.log(age)
       setShowErrAge(false)
-      setAge(e.target.value)            
-  } else {
-    setShowErrAge(true)  
+      setAge(e.target.value)
+    } else {
+      setShowErrAge(true)
+    }
+    // console.log(valid)
   }
-  // console.log(valid)
-}
-    
-    
-    const handleSubmit = (e)=> {
-      e.preventDefault();
-      console.log("clicked");
-      const data = {
-        studentName:sname,
-        phoneNumber:mNumber,
-        course:coursename,
-        age:age,
-        dateOfBirth:dateOfBirth,
-        address:address
-      }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("clicked");
+    const data = {
+      studentName: sname,
+      phoneNumber: mNumber,
+      course: coursename,
+      age: age,
+      dateOfBirth: dateOfBirth,
+      address: address,
+      
+    }
     console.log(data);
-      axios.post(
-        " https://fiery-advice-production.up.railway.app/student",data).then(res=>{
+    axios.post(
+      " http://localhost:8080/student", data).then(res => {
         Swal.fire({
           icon: 'success',
           title: 'Success',
           text: 'Student Created.',
         });
         navigate('/students');
-      }).catch(e=>{
+      }).catch(e => {
         Swal.fire({
           icon: 'error',
           title: 'Error',
           text: 'Error in creating student',
         });
       })
-      
-    };
+
+  };
   return (
     <div>
       <Navbar />
@@ -98,21 +109,21 @@ const handleAgeChange = (e) =>{
                       </p>
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-6">
                         <Link to='/students'>
-                        <button
+                          <button
                             type="button"
                             className="btn btn-primary mx-auto"
                           >
                             View Student List
                           </button>
                         </Link>
-                          
-                        </div>
+
+                      </div>
                       <form
                         className="mx-1 mx-md-4"
                         onSubmit={handleSubmit}
                       >
-                       <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-user fa-lg me-3 mt-5 fa-fw"></i>
+                        <div className="d-flex flex-row align-items-center mb-4">
+                          <i className="fas fa-user fa-lg me-3 mt-5 fa-fw"></i>
                           <div className=" flex-fill mb-0">
                             <label
                               className="form-label mb-0"
@@ -122,18 +133,17 @@ const handleAgeChange = (e) =>{
                             </label>
                             <input required
                               type="text"
-                               name="sname"
-                              value={sname} 
-                            onChange={handleSnameChange}
+                              name="sname"
+                              value={sname}
+                              onChange={handleSnameChange}
                               className="form-control"
                             />
                           </div>
                         </div>
-
                         <div className="d-flex flex-row align-items-center mb-2">
-                        <i className="fas fa-phone fa-lg me-3 mt-3 fa-fw"></i>
+                          <i className="fas fa-phone fa-lg me-3 mt-3 fa-fw"></i>
                           <div className=" flex-fill mb-0">
-                          <label 
+                            <label
                               className="form-label mb-0"
                               htmlFor="form3Example4c"
                             >
@@ -141,58 +151,59 @@ const handleAgeChange = (e) =>{
                             </label>
                             <input
                               type="text" required
-                               value={mNumber}
-                              className="form-control" onChange={handleNumChange}  />
-                              {showErrNum && <small className="form-text text-danger">Number should be not more than 10 digits</small> }
-                            </div>
+                              value={mNumber}
+                              className="form-control" onChange={handleNumChange} />
+                            {showErrNum && <small className="form-text text-danger">Number should be not more than 10 digits</small>}
+                          </div>
                         </div>
 
-                         
+
                         <div className="d-flex flex-row align-items-center mb-4">
-                        {/* <i className="fas fa-calander-days "></i> */}
-                        <i class="fa-solid fa-book fa-lg me-3 mt-5 fa-fw"></i>
+                          {/* <i className="fas fa-calander-days "></i> */}
+                          <i class="fa-solid fa-book fa-lg me-3 mt-5 fa-fw"></i>
                           <div className="flex-fill mb-0">
                             <div className='row'>
                               <div className='col-6'>
-                              <div className="form-group">
-                            <label className='form-label'>Course</label>
-                            <select class="form-select" onChange={(e)=>setCourseName(e.target.value)}  aria-label="Default select example">
-                                <option selected disabled>Select Course</option>
-                                <option value="B.tech(AI&DS)">B.tech(AI&DS)</option>
-                                <option value="B.tech(AI&ML)">B.tech(AI&ML)</option>
-                                <option value="B.tech(CSE)">B.tech(CSE)</option>
-                                <option value="B.com">B.com</option>                                
-                            </select>
-                        </div>
+                                <div className="form-group">
+                                  <label className='form-label'>Course</label>
+                                  <select className="form-select" onChange={(e) => setCourseName(e.target.value)} aria-label="Default select example" required>
+                                    <option selected disabled>Select Course</option>
+                                    <option value="B.tech(AI&DS)">B.tech(AI&DS)</option>
+                                    <option value="B.tech(AI&ML)">B.tech(AI&ML)</option>
+                                    <option value="B.tech(CSE)">B.tech(CSE)</option>
+                                    <option value="B.com">B.com</option>
+                                  </select>
+                                </div>
                               </div>
                               <div className='col-6'>
-                                <label 
-                                className="form-label"
-                                htmlFor="form3Example4c"
+                                <label
+                                  className="form-label"
+                                  htmlFor="form3Example4c"
                                 >
                                   D.O.B
                                 </label>
                                 <input
                                   type="date" required
+                                  min={today.toISOString().split('T')[0]}
                                   className="form-control"
-                                  onChange={(e)=>setDateOfBirth(e.target.value)}
-                              />
+                                  onChange={(e) => setDateOfBirth(e.target.value)}
+                                />
                               </div>
                             </div>
                           </div>
                         </div>
 
                         <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-home fa-lg me-3 fa-fw"></i>
+                          <i className="fas fa-home fa-lg me-3 fa-fw"></i>
                           <div className=" flex-fill mb-0">
-                          <label className='form-label'>Address</label>
-                    <textarea value={address} className="form-label w-100" placeholder="Address" onChange={(e)=>setAddress(e.target.value)}></textarea> 
-                    {showErrAdress && <small className="form-text text-danger">(Enter Valid address)</small>}
+                            <label className='form-label'>Address</label>
+                            <textarea value={address} className="form-label w-100" placeholder="Address" onChange={(e) => setAddress(e.target.value)}></textarea>
+                            {showErrAdress && <small className="form-text text-danger">(Enter Valid address)</small>}
                           </div>
                         </div>
 
-                             
-                       
+
+
                         <div className="d-flex justify-content-center mx-auto mb-3 mb-lg-4">
                           <button
                             type="submit"
@@ -218,7 +229,7 @@ const handleAgeChange = (e) =>{
           </div>
         </div>
       </section>
-      </div>
+    </div>
   )
 }
 

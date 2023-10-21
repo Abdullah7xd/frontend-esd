@@ -10,7 +10,7 @@ import Popup from './Popup';
 const Students = () => {
   const [data, setData] = useState([])
   function getData() {
-    axios.get('https://fiery-advice-production.up.railway.app/course')
+    axios.get('http://localhost:8080/course')
       .then((res) => {
         console.log(res.data);
         const tdata = res.data.filter(course=> course.status === 1)
@@ -20,7 +20,7 @@ const Students = () => {
 
   function handleDelete(courseId) {
     console.log(courseId);
-    axios.delete(`https://fiery-advice-production.up.railway.app/course/${courseId}`
+    axios.delete(`http://localhost:8080/course/${courseId}`
     ).then(() => {
       getData()
     })

@@ -8,7 +8,6 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Createstudent from './components/Createstudent';
 import Updatestudent from './components/Updatestudent';
-import Home1 from './components/Home1';
 import Dashboard from './components/Dashboard';
 import Courses from './components/Courses';
 import Students from './components/Students';
@@ -26,9 +25,6 @@ function App() {
       {/* <Navbar1 /> */}
       <Routes>
         <Route path="/home" element={<Home />} />
-
-        <Route path="/home1" element={<Home1 />}></Route>
-
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/createstudent" element={<ExtraDetails/>} />
@@ -40,8 +36,6 @@ function App() {
         <Route path="/profile" element={<Profile/>} />
         <Route path="/" element={<Navigate to="/login"/>} />        
         <Route path="/updatedetails" element={<UpdateFullDetails/>} />
- 
-
       </Routes>
       </BrowserRouter>
       
