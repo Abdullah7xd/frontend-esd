@@ -99,12 +99,12 @@ const Students = () => {
                       <td>{student.course}</td>
                       <td>
                         <Link to="/updatedetails" state={student}>
-                          <button className="btn btn-info mb-1 w-100" title="Update">
+                          <button className="btn btn-info mb-1 w-100" title="Click to Update this student record">
                             <i className="fa-regular fa-pen-to-square"></i>
                           </button>
                         </Link>
                         <button
-                          className="btn btn-warning w-100"
+                          className="btn btn-warning w-100" title="Click to Delete this student record"
                           onClick={() => handleDelete(student.studentId)}
                         >
                           <i className="fa-solid fa-trash"></i>

@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 function Login () {
     const [data,setData] = useState([]);
     const [loading,setLoading] = useState(true);
+    const [showErrName,setshowErrName]= useState(false)
 
     const [formData,setFormData] = useState(
         {
@@ -19,12 +20,33 @@ function Login () {
 
    const handleChange = (e) => {
      const {name, value} = e.target;
-     setFormData( 
+     console.log(name,value)
+     if(name==='username'){
+      const valid = /^[a-zA-Z ]{0,30}$/.test(value)
+      console.log(name==='username',valid)
+        if (valid) {
+            setshowErrName(false)
+            setFormData( 
+              {
+                 ...formData,
+                  [name]: value
+      
+              });
+        } else {
+             setshowErrName(true)
+
+        }
+     } 
+     else if (value.length < 20)
+     {
+      setFormData( 
         {
            ...formData,
             [name]: value
 
         });
+     }
+     
     };
 
 useEffect(() => {
@@ -130,6 +152,7 @@ useEffect(() => {
                               onChange={handleChange}
                               className="form-control"
                             />
+                            {showErrName && <span className="text-danger">user name should be alphabetical</span>}
                           </div>
                         </div>
                         <div className="d-flex flex-row align-items-center mb-4">

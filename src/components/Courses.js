@@ -69,7 +69,7 @@ const Students = () => {
               <tr>
                 <th>Course ID</th>
                 <th>Course Name</th>
-                <th>Department</th>
+                <th className="th" title="Engineering Department">Department</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -83,7 +83,7 @@ const Students = () => {
                   <td>
                     
 
-                    <button className='btn btn-warning' onClick={() => handleDelete(course.courseId)}>
+                    <button className='btn btn-warning' title="Click here to delete the course" onClick={() => handleDelete(course.courseId)}>
                     <i class="fa-solid fa-trash"></i>
                     </button>
 

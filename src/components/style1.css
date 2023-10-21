@@ -531,3 +531,7 @@ p {
 }
 
 
+.image-home-dev{
+  max-height:200px;
+  object-fit:cover;
+}
